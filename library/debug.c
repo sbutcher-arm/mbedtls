@@ -115,6 +115,51 @@ void mbedtls_debug_print_msg( const mbedtls_ssl_context *ssl, int level,
     debug_send_line( ssl, level, file, line, str );
 }
 
+void mbedtls_debug_print_msg_str( const mbedtls_ssl_context *ssl, int level,
+                                  const char *file, int line,
+                                  const char *format, const char* arg_string )
+{
+    char str[DEBUG_BUF_SIZE];
+    int ret;
+
+    if( NULL == ssl || NULL == ssl->conf || NULL == ssl->conf->f_dbg ||
+        level > debug_threshold )
+        return;
+
+    ret = mbedtls_snprintf( str, DEBUG_BUF_SIZE, format, arg_string );
+    if( ret >= 0 && ret < DEBUG_BUF_SIZE - 1 )
+    {
+        str[ret]     = '\n';
+        str[ret + 1] = '\0';
+    }
+
+    debug_send_line( ssl, level, file, line, str );
+}
+
+void mbedtls_debug_print_msg_int4( const mbedtls_ssl_context *ssl, int level,
+                                   const char *file, int line,
+                                   const char *format,
+                                   const int arg1, const int arg2,
+                                   const int arg3, const int arg4 )
+{
+    char str[DEBUG_BUF_SIZE];
+    int ret;
+
+    if( NULL == ssl || NULL == ssl->conf || NULL == ssl->conf->f_dbg ||
+        level > debug_threshold )
+        return;
+
+    ret = mbedtls_snprintf( str, DEBUG_BUF_SIZE, format,
+                            arg1, arg2, arg3, arg4 );
+    if( ret >= 0 && ret < DEBUG_BUF_SIZE - 1 )
+    {
+        str[ret]     = '\n';
+        str[ret + 1] = '\0';
+    }
+
+    debug_send_line( ssl, level, file, line, str );
+}
+
 void mbedtls_debug_print_ret( const mbedtls_ssl_context *ssl, int level,
                       const char *file, int line,
                       const char *text, int ret )

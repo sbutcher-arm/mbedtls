@@ -40,9 +40,33 @@
 
 #define MBEDTLS_DEBUG_STRIP_PARENS( ... )   __VA_ARGS__
 
-#define MBEDTLS_SSL_DEBUG_MSG( level, args )                    \
-    mbedtls_debug_print_msg( ssl, level, __FILE__, __LINE__,    \
+#define MBEDTLS_SSL_DEBUG_MSG( level, args )                               \
+    mbedtls_debug_print_msg( ssl, level, __FILE__, __LINE__,               \
                              MBEDTLS_DEBUG_STRIP_PARENS args )
+
+#define MBEDTLS_SSL_DEBUG_MSG_ARG_STR( level, fmtstring, str_arg )         \
+    mbedtls_debug_print_msg_str( ssl, level, __FILE__, __LINE__,           \
+                                 fmtstring, str_arg )
+
+#define MBEDTLS_SSL_DEBUG_MSG_ARG_ULONG( level, fmtstring, arg1 )         \
+    mbedtls_debug_print_msg_int4( ssl, level, __FILE__, __LINE__,          \
+                                  fmtstring, (unsigned int)arg1, 0, 0, 0 )
+
+#define MBEDTLS_SSL_DEBUG_MSG_ARG_INT( level, fmtstring, arg1 )           \
+    mbedtls_debug_print_msg_int4( ssl, level, __FILE__, __LINE__,          \
+                             fmtstring, arg1, 0, 0, 0 )
+
+#define MBEDTLS_SSL_DEBUG_MSG_ARG_INT2( level,fmtstring, arg1, arg2 )     \
+    mbedtls_debug_print_msg_int4( ssl, level, __FILE__, __LINE__,          \
+                             fmtstring, arg1, arg2, 0, 0 )
+
+#define MBEDTLS_SSL_DEBUG_MSG_ARG_INT3( level, string, arg1, arg2, arg3 ) \
+    mbedtls_debug_print_msg_int4( ssl, level, __FILE__, __LINE__,          \
+                             string, arg1, arg2, arg3, 0 )
+
+#define MBEDTLS_SSL_DEBUG_MSG_ARG_INT4( level, string, arg1, arg2, arg3, arg4 ) \
+    mbedtls_debug_print_msg_int4( ssl, level, __FILE__, __LINE__,          \
+                             string, arg1, arg2, arg3, arg4 )
 
 #define MBEDTLS_SSL_DEBUG_RET( level, text, ret )                \
     mbedtls_debug_print_ret( ssl, level, __FILE__, __LINE__, text, ret )
@@ -115,6 +139,16 @@ void mbedtls_debug_set_threshold( int threshold );
 void mbedtls_debug_print_msg( const mbedtls_ssl_context *ssl, int level,
                               const char *file, int line,
                               const char *format, ... );
+
+void mbedtls_debug_print_msg_str( const mbedtls_ssl_context *ssl, int level,
+                                  const char *file, int line,
+                                  const char *format, const char* arg_string );
+
+void mbedtls_debug_print_msg_int4( const mbedtls_ssl_context *ssl, int level,
+                                   const char *file, int line,
+                                   const char *format,
+                                   const int arg1, const int arg2,
+                                   const int arg3, const int arg4 );
 
 /**
  * \brief   Print the return value of a function to the debug output. This
