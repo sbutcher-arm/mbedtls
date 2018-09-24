@@ -30,6 +30,10 @@
 #include "mbedtls/platform.h"
 #include "mbedtls/platform_util.h"
 
+#if defined(__MINGW32__) && !defined(__USE_MINGW_ANSI_STDIO)
+#define __USE_MINGW_ANSI_STDIO 1
+#endif
+
 /* The compile time configuration of memory allocation via the macros
  * MBEDTLS_PLATFORM_{FREE/CALLOC}_MACRO takes precedence over the runtime
  * configuration via mbedtls_platform_set_calloc_free(). So, omit everything
