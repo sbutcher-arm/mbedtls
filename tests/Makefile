@@ -2,7 +2,7 @@
 # To compile on SunOS: add "-lsocket -lnsl" to LDFLAGS
 # To compile with PKCS11: add "-lpkcs11-helper" to LDFLAGS
 
-CFLAGS	?= -O2
+CFLAGS	?= -O0
 WARNING_CFLAGS ?= -Wall -W -Wdeclaration-after-statement -Wno-unused-function -Wno-unused-value
 LDFLAGS ?=
 
@@ -135,4 +135,3 @@ $(EMBEDDED_TESTS): embedded_%: suites/$$(firstword $$(subst ., ,$$*)).function s
 		-o ./TESTS/mbedtls/$*
 
 generate-target-tests: $(EMBEDDED_TESTS)
-
