@@ -69,14 +69,14 @@
 
 #if defined( MBEDTLS_CHECK_PARAMS )
 #define MBEDTLS_AES_VALIDATE_RET( cond )  do{ if( !(cond)  ) {                 \
-                                            MBEDTLS_PARAM_FAILED( #cond,       \
+                                            mbedtls_param_failed( #cond,       \
                                                                   __FILE__,    \
                                                                   __LINE__ );  \
                                             return MBEDTLS_ERR_AES_BAD_INPUT_DATA;} \
                                           } while(0);
 
 #define MBEDTLS_AES_VALIDATE( cond )      do{ if( !(cond)  ) {                 \
-                                            MBEDTLS_PARAM_FAILED( #cond,       \
+                                            mbedtls_param_failed( #cond,       \
                                                                   __FILE__,    \
                                                                   __LINE__ );  \
                                             return; }                          \
