@@ -41,10 +41,10 @@
 extern "C" {
 #endif
 
-#if defined(MBEDTLS_CHECK_PARAMS)
+#if defined(MBEDTLS_PARAM_FAILED_CALLBACK)
 extern void (*mbedtls_param_failed)( char *, char *, int );
 int mbedtls_set_param_failed( void (*param_failed_func)( char *, char *, int ) );
-#endif /* MBEDTLS_CHECK_PARAMS */
+#endif /* MBEDTLS_PARAM_FAILED_CALLBACK */
 
 /**
  * \brief       Securely zeroize a buffer

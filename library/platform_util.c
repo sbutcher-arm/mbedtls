@@ -135,8 +135,7 @@ struct tm *mbedtls_platform_gmtime_r( const mbedtls_time_t *tt,
 }
 #endif /* MBEDTLS_HAVE_TIME_DATE && MBEDTLS_PLATFORM_GMTIME_R_ALT */
 
-#if defined(MBEDTLS_CHECK_PARAMS)
-
+#if defined(MBEDTLS_PARAM_FAILED_CALLBACK)
 static void mbedtls_param_failed_default( char *failure_condition,
                                           char *file,
                                           int line )
@@ -162,4 +161,4 @@ int mbedtls_set_param_failed(
     return( 0 );
 }
 
-#endif /*  MBEDTLS_CHECK_PARAMS */
+#endif /* MBEDTLS_PARAM_FAILED_CALLBACK */
