@@ -42,8 +42,9 @@ extern "C" {
 #endif
 
 #if defined(MBEDTLS_PARAM_FAILED_CALLBACK)
-extern void (*mbedtls_param_failed)( char *, char *, int );
-int mbedtls_set_param_failed( void (*param_failed_func)( char *, char *, int ) );
+extern void (*mbedtls_param_failed)( const char *, const char *, int );
+int mbedtls_set_param_failed(
+    void (*param_failed_func)( const char *, const char *, int ) );
 #endif /* MBEDTLS_PARAM_FAILED_CALLBACK */
 
 /**

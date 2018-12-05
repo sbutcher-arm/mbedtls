@@ -136,8 +136,8 @@ struct tm *mbedtls_platform_gmtime_r( const mbedtls_time_t *tt,
 #endif /* MBEDTLS_HAVE_TIME_DATE && MBEDTLS_PLATFORM_GMTIME_R_ALT */
 
 #if defined(MBEDTLS_PARAM_FAILED_CALLBACK)
-static void mbedtls_param_failed_default( char *failure_condition,
-                                          char *file,
+static void mbedtls_param_failed_default( const char *failure_condition,
+                                          const char *file,
                                           int line )
 {
 #if defined(MBEDTLS_PLATFORM_C)
@@ -151,11 +151,11 @@ static void mbedtls_param_failed_default( char *failure_condition,
 #endif /* MBEDTLS_PLATFORM_C */
 }
 
-void (*mbedtls_param_failed)( char *, char *, int ) =
+void (*mbedtls_param_failed)( const char *, const char *, int ) =
     mbedtls_param_failed_default;
 
 int mbedtls_set_param_failed(
-    void (*param_failed_func)( char *, char *, int ) )
+    void (*param_failed_func)( const char *, const char *, int ) )
 {
     mbedtls_param_failed = param_failed_func;
     return( 0 );

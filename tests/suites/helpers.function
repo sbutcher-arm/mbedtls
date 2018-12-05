@@ -320,7 +320,9 @@ static void platform_teardown()
 }
 
 #if defined(MBEDTLS_CHECK_PARAMS)
-void mbedtls_jump_param_failed( char* failure_condition, char* file, int line )
+void mbedtls_jump_param_failed( const char* failure_condition,
+                                const char* file,
+                                int line )
 {
     (void)failure_condition;
     (void)file;
