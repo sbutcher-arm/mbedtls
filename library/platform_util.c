@@ -135,11 +135,30 @@ struct tm *mbedtls_platform_gmtime_r( const mbedtls_time_t *tt,
 }
 #endif /* MBEDTLS_HAVE_TIME_DATE && MBEDTLS_PLATFORM_GMTIME_R_ALT */
 
-#if defined( MBEDTLS_CHECK_PARAMS ) && defined(MBEDTLS_PLATFORM_C) && \
-    defined(MBEDTLS_DEBUG_INVALID_PARAMS)
-void mbedtls_param_failed( char* failure_condition )
+#if defined(MBEDTLS_PARAM_FAILED_CALLBACK)
+static void mbedtls_param_failed_default( const char *failure_condition,
+                                          const char *file,
+                                          int line )
 {
-    mbedtls_printf("%s:%i: Input param failed - %s\n", __FILE__, __LINE__,                           failure_condition );
+#if defined(MBEDTLS_PLATFORM_C)
+    mbedtls_printf(
+        "%s:%i: Input param failed - %s\n", file, line, failure_condition );
+    mbedtls_exit( MBEDTLS_EXIT_FAILURE );
+#else
+    (void)failure_condition;
+    (void)file;
+    (void)line;
+#endif /* MBEDTLS_PLATFORM_C */
 }
-#endif
 
+void (*mbedtls_param_failed)( const char *, const char *, int ) =
+    mbedtls_param_failed_default;
+
+int mbedtls_set_param_failed(
+    void (*param_failed_func)( const char *, const char *, int ) )
+{
+    mbedtls_param_failed = param_failed_func;
+    return( 0 );
+}
+
+#endif /* MBEDTLS_PARAM_FAILED_CALLBACK */

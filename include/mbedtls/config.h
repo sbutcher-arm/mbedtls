@@ -275,6 +275,30 @@
  */
 #define MBEDTLS_CHECK_PARAMS
 
+/**
+ * \def MBEDTLS_PARAM_FAILED_CALLBACK
+ *
+ * Enable or disable parameter validation callback upon validation failure.
+ *
+ * The parameter validation failure may be handled in different ways. In most
+ * functions, the preferred reaction is to immediately return with an error
+ * code. However, some functions do not return an error code, but they take
+ * parameters, that need to be validated. In such case, Mbed TLS, besides
+ * returning from the function, will call a special failure callback function.
+ * The library provides a default implementation of that and allows supplying
+ * a user defined alternative.
+ *
+ * When this symbol is defined, the parameter validation callback will be
+ * compiled in and called upon the parameter validation failure.
+ *
+ * When this symbol is not defined, parameter validation will be limited to
+ * immediate returns of error codes, or just returns in the functions of void
+ * return type.
+ *
+ * Requires MBEDTLS_CHECK_PARAMS
+ */
+#define MBEDTLS_PARAM_FAILED_CALLBACK
+
 /* \} name SECTION: System support */
 
 /**
@@ -3014,9 +3038,6 @@
 //#define MBEDTLS_PLATFORM_SNPRINTF_MACRO    snprintf /**< Default snprintf macro to use, can be undefined */
 //#define MBEDTLS_PLATFORM_NV_SEED_READ_MACRO   mbedtls_platform_std_nv_seed_read /**< Default nv_seed_read function to use, can be undefined */
 //#define MBEDTLS_PLATFORM_NV_SEED_WRITE_MACRO  mbedtls_platform_std_nv_seed_write /**< Default nv_seed_write function to use, can be undefined */
-
-//#define MBEDTLS_PARAM_FAILED(x)               mbedtls_param_failed( #x ) /**< Default parameter validation callback to use. Can be undefined */
-
 
 /* SSL Cache options */
 //#define MBEDTLS_SSL_CACHE_DEFAULT_TIMEOUT       86400 /**< 1 day  */

@@ -6,6 +6,7 @@
 
 #if defined(MBEDTLS_PLATFORM_C)
 #include "mbedtls/platform.h"
+#include "mbedtls/platform_util.h"
 #else
 #include <stdio.h>
 #define mbedtls_fprintf    fprintf
@@ -25,7 +26,6 @@
 
 #if defined(MBEDTLS_CHECK_PARAMS)
 #include <setjmp.h>
-#define MBEDTLS_PARAM_FAILED(x)    mbedtls_param_failed( #x )
 #endif
 
 #ifdef _MSC_VER
@@ -320,7 +320,9 @@ static void platform_teardown()
 }
 
 #if defined(MBEDTLS_CHECK_PARAMS)
-void mbedtls_param_failed( char* failure_condition, char* file, int line )
+void mbedtls_jump_param_failed( const char* failure_condition,
+                                const char* file,
+                                int line )
 {
     (void)failure_condition;
     (void)file;
@@ -644,4 +646,3 @@ int hexcmp( uint8_t * a, uint8_t * b, uint32_t a_len, uint32_t b_len )
     }
     return ret;
 }
-
