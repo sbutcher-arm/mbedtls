@@ -196,11 +196,13 @@ static int aes_crypt_xts_wrap( void *ctx, mbedtls_operation_t operation,
 }
 #endif /* MBEDTLS_CIPHER_MODE_XTS */
 
+#if !defined(MBEDTLS_AES_ENCRYPT_ONLY)
 static int aes_setkey_dec_wrap( void *ctx, const unsigned char *key,
                                 unsigned int key_bitlen )
 {
     return mbedtls_aes_setkey_dec( (mbedtls_aes_context *) ctx, key, key_bitlen );
 }
+#endif
 
 static int aes_setkey_enc_wrap( void *ctx, const unsigned char *key,
                                 unsigned int key_bitlen )
@@ -248,7 +250,11 @@ static const mbedtls_cipher_base_t aes_info = {
     NULL,
 #endif
     aes_setkey_enc_wrap,
+#if !defined(MBEDTLS_AES_ENCRYPT_ONLY)
     aes_setkey_dec_wrap,
+#else
+    NULL,
+#endif
     aes_ctx_alloc,
     aes_ctx_free
 };

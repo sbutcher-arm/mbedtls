@@ -222,6 +222,7 @@ static const uint32_t FT3[256] = { FT };
 
 #undef FT
 
+#if !defined( MBEDTLS_AES_ENCRYPT_ONLY )
 /*
  * Reverse S-box
  */
@@ -350,6 +351,7 @@ static const uint32_t RT3[256] = { RT };
 #undef V
 
 #endif /* !MBEDTLS_AES_FEWER_TABLES */
+#endif /* !MBEDTLS_AES_ENCRYPT_ONLY */
 
 #undef RT
 
@@ -376,6 +378,7 @@ static uint32_t FT2[256];
 static uint32_t FT3[256];
 #endif /* !MBEDTLS_AES_FEWER_TABLES */
 
+#if !defined( MBEDTLS_AES_ENCRYPT_ONLY )
 /*
  * Reverse S-box & tables
  */
@@ -386,6 +389,7 @@ static uint32_t RT1[256];
 static uint32_t RT2[256];
 static uint32_t RT3[256];
 #endif /* !MBEDTLS_AES_FEWER_TABLES */
+#endif/* !MBEDTLS_AES_ENCRYPT_ONLY */
 
 /*
  * Round constants
@@ -430,7 +434,9 @@ static void aes_gen_tables( void )
      * generate the forward and reverse S-boxes
      */
     FSb[0x00] = 0x63;
+#if defined( MBEDTLS_AES_ENCRYPT_ONLY )
     RSb[0x63] = 0x00;
+#endif
 
     for( i = 1; i < 256; i++ )
     {
@@ -443,7 +449,9 @@ static void aes_gen_tables( void )
         x ^= y ^ 0x63;
 
         FSb[i] = (unsigned char) x;
+#if defined( MBEDTLS_AES_ENCRYPT_ONLY )
         RSb[x] = (unsigned char) i;
+#endif
     }
 
     /*
@@ -665,6 +673,7 @@ int mbedtls_aes_setkey_enc( mbedtls_aes_context *ctx, const unsigned char *key,
 }
 #endif /* !MBEDTLS_AES_SETKEY_ENC_ALT */
 
+#if !defined( MBEDTLS_AES_ENCRYPT_ONLY )
 /*
  * AES key schedule (decryption)
  */
@@ -735,6 +744,7 @@ exit:
 
     return( ret );
 }
+#endif /* !MBEDTLS_AES_ENCRYPT_ONLY */
 
 #if defined(MBEDTLS_CIPHER_MODE_XTS)
 static int mbedtls_aes_xts_decode_keys( const unsigned char *key,
@@ -934,6 +944,7 @@ void mbedtls_aes_encrypt( mbedtls_aes_context *ctx,
 /*
  * AES-ECB block decryption
  */
+#if !defined( MBEDTLS_AES_ENCRYPT_ONLY )
 #if !defined(MBEDTLS_AES_DECRYPT_ALT)
 int mbedtls_internal_aes_decrypt( mbedtls_aes_context *ctx,
                                   const unsigned char input[16],
@@ -998,6 +1009,7 @@ void mbedtls_aes_decrypt( mbedtls_aes_context *ctx,
     mbedtls_internal_aes_decrypt( ctx, input, output );
 }
 #endif /* !MBEDTLS_DEPRECATED_REMOVED */
+#endif /* !MBEDTLS_AES_ENCRYPT_ONLY */
 
 /*
  * AES-ECB block encryption/decryption
@@ -1033,7 +1045,12 @@ int mbedtls_aes_crypt_ecb( mbedtls_aes_context *ctx,
     if( mode == MBEDTLS_AES_ENCRYPT )
         return( mbedtls_internal_aes_encrypt( ctx, input, output ) );
     else
+#if defined( MBEDTLS_AES_ENCRYPT_ONLY )
+        /* Decrypt not supported */
+        return  MBEDTLS_ERR_PLATFORM_FEATURE_UNSUPPORTED;
+#else
         return( mbedtls_internal_aes_decrypt( ctx, input, output ) );
+#endif /* !MBEDTLS_AES_ENCRYPT_ONLY */
 }
 
 #if defined(MBEDTLS_CIPHER_MODE_CBC)

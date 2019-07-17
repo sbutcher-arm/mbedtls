@@ -545,6 +545,30 @@
 //#define MBEDTLS_ENTROPY_HARDWARE_ALT
 
 /**
+ * \def MBEDTLS_AES_128_ONLY
+ *
+ * Enable AES-128 only, and disable use of AES-192 and AES-256. 
+ *
+ * For many applications AES-128 offer sufficient security and by disabling
+ * other keysizes, the codesize can be reduced for emnbedded applications.
+ *
+ * This option is independent of \c ???
+ *
+ */
+#define MBEDTLS_AES_128_ONLY
+
+/**
+ * \def MBEDTLS_AES_ENCRYPT_ONLY
+ *
+ * Some applications only require encrypt functionality. By disabling decrypt
+ * the codesize can be reduced.
+ *
+ * This option is independent of \c ???
+ *
+ */
+#define MBEDTLS_AES_ENCRYPT_ONLY
+
+/**
  * \def MBEDTLS_AES_ROM_TABLES
  *
  * Use precomputed AES tables stored in ROM.

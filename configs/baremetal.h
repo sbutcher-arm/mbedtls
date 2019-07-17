@@ -39,6 +39,7 @@
 #define MBEDTLS_AES_C
 #define MBEDTLS_AES_ROM_TABLES
 #define MBEDTLS_AES_FEWER_TABLES
+#define MBEDTLS_AES_ENCRYPT_ONLY
 #define MBEDTLS_CCM_C
 
 /* Asymmetric crypto: Single-curve ECC only. */
@@ -98,12 +99,12 @@
 #define MBEDTLS_SSL_CONF_AUTHMODE MBEDTLS_SSL_VERIFY_REQUIRED
 #define MBEDTLS_SSL_CONF_BADMAC_LIMIT 0
 #define MBEDTLS_SSL_CONF_ANTI_REPLAY MBEDTLS_SSL_ANTI_REPLAY_ENABLED
-#define MBEDTLS_SSL_CONF_GET_TIMER mbedtls_timing_get_delay
-#define MBEDTLS_SSL_CONF_SET_TIMER mbedtls_timing_set_delay
-#define MBEDTLS_SSL_CONF_RECV mbedtls_net_recv
-#define MBEDTLS_SSL_CONF_SEND mbedtls_net_send
-#define MBEDTLS_SSL_CONF_RECV_TIMEOUT mbedtls_net_recv_timeout
-#define MBEDTLS_SSL_CONF_RNG mbedtls_hmac_drbg_random
+//#define MBEDTLS_SSL_CONF_GET_TIMER mbedtls_timing_get_delay
+//#define MBEDTLS_SSL_CONF_SET_TIMER mbedtls_timing_set_delay
+//#define MBEDTLS_SSL_CONF_RECV mbedtls_net_recv
+//#define MBEDTLS_SSL_CONF_SEND mbedtls_net_send
+//#define MBEDTLS_SSL_CONF_RECV_TIMEOUT mbedtls_net_recv_timeout
+//#define MBEDTLS_SSL_CONF_RNG mbedtls_hmac_drbg_random
 #define MBEDTLS_SSL_CONF_MIN_MINOR_VER MBEDTLS_SSL_MINOR_VERSION_3
 #define MBEDTLS_SSL_CONF_MAX_MINOR_VER MBEDTLS_SSL_MINOR_VERSION_3
 #define MBEDTLS_SSL_CONF_MIN_MAJOR_VER MBEDTLS_SSL_MAJOR_VERSION_3
