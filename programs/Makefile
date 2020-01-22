@@ -105,8 +105,8 @@ ifndef WINDOWS
 all: fuzz
 endif
 
-fuzz:
-	$(MAKE) -C fuzz THIRDPARTY_INCLUDES=$(THIRDPARTY_INCLUDES)
+#fuzz:
+#	$(MAKE) -C fuzz THIRDPARTY_INCLUDES=$(THIRDPARTY_INCLUDES)
 
 $(DEP):
 	$(MAKE) -C ../library
